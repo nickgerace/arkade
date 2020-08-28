@@ -6,12 +6,9 @@ package apps
 import (
 	"fmt"
 
-<<<<<<< HEAD
-=======
 	"github.com/alexellis/arkade/pkg/config"
 	"github.com/alexellis/arkade/pkg/k8s"
 
->>>>>>> upstream/master
 	"github.com/alexellis/arkade/pkg"
 
 	"github.com/spf13/cobra"

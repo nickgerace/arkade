@@ -6,6 +6,12 @@ package apps
 import (
 	"fmt"
 
+<<<<<<< HEAD
+=======
+	"github.com/alexellis/arkade/pkg/config"
+	"github.com/alexellis/arkade/pkg/k8s"
+
+>>>>>>> upstream/master
 	"github.com/alexellis/arkade/pkg"
 
 	"github.com/spf13/cobra"
@@ -21,7 +27,7 @@ func MakeInstallTekton() *cobra.Command {
 	}
 
 	tekton.RunE = func(command *cobra.Command, args []string) error {
-		kubeConfigPath := getDefaultKubeconfig()
+		kubeConfigPath := config.GetDefaultKubeconfig()
 
 		if command.Flags().Changed("kubeconfig") {
 			kubeConfigPath, _ = command.Flags().GetString("kubeconfig")
@@ -29,7 +35,7 @@ func MakeInstallTekton() *cobra.Command {
 
 		fmt.Printf("Using kubeconfig: %s\n", kubeConfigPath)
 
-		arch := getNodeArchitecture()
+		arch := k8s.GetNodeArchitecture()
 		fmt.Printf("Node architecture: %q\n", arch)
 
 		if arch != IntelArch {
@@ -37,14 +43,14 @@ func MakeInstallTekton() *cobra.Command {
 		}
 
 		fmt.Println("Installing Tekton pipelines...")
-		_, err := kubectlTask("apply", "-f",
+		_, err := k8s.KubectlTask("apply", "-f",
 			"https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml")
 		if err != nil {
 			return err
 		}
 
 		fmt.Println("Installing Tekton dashboard...")
-		_, err = kubectlTask("apply", "-f",
+		_, err = k8s.KubectlTask("apply", "-f",
 			"https://github.com/tektoncd/dashboard/releases/download/v0.5.1/tekton-dashboard-release.yaml")
 		if err != nil {
 			return err
